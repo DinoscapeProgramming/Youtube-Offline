@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Youtube Offline</title>
+    <script defer="" src="script.js"></script>
+  </head>
+  <body style="background-color: #0f0f0f; overflow: hidden">
+    <div id="videoSelectContainer" style="display: block; padding: 7.5px">
+      <div style="display: flex; flex-direction: row">
+        <input
+          id="downloadLinkInput"
+          placeholder="YouTube Video URL or YouTube Playlist URL"
+          style="
+            border-radius: 20px 0px 0 20px;
+            border: 0.75px solid #343232;
+            font-size: 15.5px;
+            width: 80%;
+            color: white;
+            padding-left: 17.5px;
+            background-color: #181717;
+          "
+        />
+        <button
+          id="downloadButton"
+          class="downloadButton"
+          style="
+            border-radius: 0px 20px 20px 0px;
+            height: 40px;
+            border: 0.75px solid #343232;
+            width: 20%;
+            cursor: pointer;
+            background: url('../assets/downloadIcon.png') no-repeat 5px;
+            border-left: none;
+            background-size: 35px;
+            background-color: #343232;
+            color: white;
+            font-size: 15px;
+            padding-left: 37.5px;
+            text-align: left;
+          "
+        >
+          Download
+        </button>
+      </div>
+      <div
+        id="videoContainer"
+        style="display: flex; flex-direction: column; margin-top: 2.5px"
+      >
+        <div
+          style="
+            border-radius: 12.5px;
+            border: 0.75px solid #343232;
+            margin-top: 7.5px;
+          "
+        >
+          <h2
+            style="
+              color: white;
+              text-align: center;
+              font-family: Roboto, Arial, sans-serif;
+            "
+          >
+            No videos downloaded
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div id="videoViewContainer" style="display: none; justify-content: center">
+      <video
+        id="videoElement"
+        style="max-width: 100vw; height: 100vh; margin-top: -7.5px"
+        controls=""
+        src="../videos/safR1SPS_9k.mp4"
+      ></video>
+      <div
+        id="closeVideoButton"
+        style="
+          position: absolute;
+          top: 7.5px;
+          right: 7.5px;
+          width: 25.5px;
+          height: 25px;
+          background-color: white;
+          border-radius: 5px;
+          display: flex;
+          justify-content: center;
+          cursor: pointer;
+          border: 1px solid #9f9f9f;
+          aspect-ratio: 1 / 1;
+        "
+      >
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/6372/6372150.png"
+          style="
+            height: 90%;
+            aspect-ratio: 1.125/1;
+            margin-left: 2.5%;
+            margin-top: 7.5%;
+          "
+        />
+      </div>
+    </div>
+  </body>
+</html>

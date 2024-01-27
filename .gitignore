@@ -1,0 +1,5 @@
+node_modules/
+videos/
+authors/
+data.json
+package-lock.json
