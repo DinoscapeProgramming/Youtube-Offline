@@ -1,1 +1,1 @@
-WScript.CreateObject("WScript.Shell").Run "electron . ", 0, True
+WScript.CreateObject("WScript.Shell").Run "npm install & electron . ", 0, True
