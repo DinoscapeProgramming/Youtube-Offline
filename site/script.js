@@ -140,8 +140,8 @@ document.getElementById("downloadButton").addEventListener("click", () => {
   };
   if (document.getElementById("downloadLinkInput").value.split("/")[3].startsWith("watch")) {
     if (document.getElementById("videoContainer").children[0]?.children[0]?.tagName === "H2") document.getElementById("videoContainer").children[0].remove();
-    if (Array.from(Array.from(document.getElementById("videoContainer").children).at(-1).children).find((videoElement) => videoElement.style.opacity === "0")) {
-      Array.from(Array.from(document.getElementById("videoContainer").children).at(-1).children).find((videoElement) => videoElement.style.opacity === "0").style.opacity = "1";
+    if (Array.from(Array.from(document.getElementById("videoContainer").children || [])?.at(-1)?.children || [])?.find((videoElement) => videoElement?.style?.opacity === "0")) {
+      Array.from(Array.from(document.getElementById("videoContainer").children).at(-1).children).find((videoElement) => videoElement?.style.opacity === "0").style.opacity = "1";
     } else {
       let videoRow = document.createElement("div");
       videoRow.style.display = "flex";
@@ -221,7 +221,7 @@ document.getElementById("downloadButton").addEventListener("click", () => {
     ytpl(document.getElementById("downloadLinkInput").value.split("/")[3].split("=")[1].split("&")[0]).then(({ items }) => {
       items.forEach(({ shortUrl }) => {
         if (document.getElementById("videoContainer").children[0]?.children[0]?.tagName === "H2") document.getElementById("videoContainer").children[0].remove();
-        if (Array.from(Array.from(document.getElementById("videoContainer").children).at(-1).children).find((videoElement) => videoElement.style.opacity === "0")) {
+        if (Array.from(Array.from(document.getElementById("videoContainer").children || [])?.at(-1)?.children || []).find((videoElement) => videoElement?.style?.opacity === "0")) {
           Array.from(Array.from(document.getElementById("videoContainer").children).at(-1).children).find((videoElement) => videoElement.style.opacity === "0").style.opacity = "1";
         } else {
           let videoRow = document.createElement("div");
