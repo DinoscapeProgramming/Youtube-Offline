@@ -2,9 +2,8 @@
  A lightweight YouTube video downloader enabling offline viewing of your favorite content.
 
 ## Installation
-- Download repository as ZIP,
-- Extract the ZIP-file,
-- Copy the extracted ```run.vbs``` file
-- Go to /appdata/Microsoft/Windows/Start Menu/Programs
-- Paste the ```run.vbs``` file as a shortcut
-- Now YouTube Offline is installed like every other desktop app
+- Go to ```https://github.com/DinoscapeProgramming/Youtube-Offline/releases/tag/1.0.0```
+- Download the executable
+- Open the executable
+- Go through the installer
+- Thanks for using ___Youtube Offline___
