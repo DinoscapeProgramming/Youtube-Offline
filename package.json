@@ -21,7 +21,7 @@
     "electron-builder": "^24.9.1"
   },
   "build": {
-    "appId": "com.ipenywis.app",
+    "appId": "youtube-offline",
     "productName": "Youtube Offline",
     "target": "NSIS",
     "directories": {
