@@ -1,6 +1,5 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
-const fs = require('fs');
 
 function createWindow() {
   const window = new BrowserWindow({
@@ -16,12 +15,6 @@ function createWindow() {
   window.maximize();
   window.show();
   window.loadFile('site/index.html');
-  ["videos", "authors"].forEach((directory) => {
-    if (!fs.readdirSync(__dirname).includes(directory)) {
-      fs.mkdirSync(path.join(__dirname, directory));
-    };
-  });
-  if (!fs.readdirSync(__dirname).includes("data.json")) fs.writeFileSync("./data.json", JSON.stringify({}));
 };
 
 app.whenReady().then(() => {

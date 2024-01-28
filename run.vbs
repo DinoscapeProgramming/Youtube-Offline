@@ -1,1 +1,0 @@
-WScript.CreateObject("WScript.Shell").Run "electron . ", 0, True

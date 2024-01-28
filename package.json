@@ -4,54 +4,36 @@
   "version": "1.0.0",
   "description": "A lightweight YouTube video downloader enabling offline viewing of your favorite content.",
   "main": "index.js",
+  "keywords": [],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
     "build": "electron-builder"
   },
-  "build": {
-    "appId": "youtube-offline",
-    "win": {
-      "msi": true,
-      "author": "Dinoscape",
-      "target": [
-        "nsis"
-      ],
-      "icon": "assets/favicon.ico"
-    },
-    "nsis": {
-      "oneClick": false,
-      "perMachine": false,
-      "installerIcon": "assets/favicon.ico",
-      "uninstallerIcon": "asstes/favicon.ico",
-      "uninstallDisplayName": "Youtube Offline",
-      "license": "license.md",
-      "allowToChangeInstallationDirectory": false
-    }
-  },
-  "keywords": [],
-  "author": "Dinoscape",
+  "author": "DinoscapeProgramming",
   "license": "ISC",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0",
-    "ffmpeg": "^0.0.4",
-    "ffmpeg-static": "^5.2.0",
     "moment": "^2.30.1",
     "ytdl-core": "^4.11.5",
     "ytdl-core-muxer": "^1.0.1",
     "ytpl": "^2.3.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.2.0",
-    "@electron-forge/maker-deb": "^7.2.0",
-    "@electron-forge/maker-rpm": "^7.2.0",
-    "@electron-forge/maker-squirrel": "^7.2.0",
-    "@electron-forge/maker-zip": "^7.2.0",
-    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
-    "@electron/packager": "^18.1.3",
     "electron": "^28.2.0",
     "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.ipenywis.app",
+    "productName": "Youtube Offline",
+    "target": "NSIS",
+    "directories": {
+      "output": "build"
+    },
+    "icon": "assets/favicon.ico",
+    "nsis": {
+      "installerIcon": "assets/favicon.ico",
+      "installerHeaderIcon": "assets/favicon.ico",
+      "deleteAppDataOnUninstall": true,
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false
+    }
   }
 }
