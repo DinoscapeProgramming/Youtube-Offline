@@ -1,6 +1,6 @@
 {
   "name": "youtube-offline",
-  "productName": "Youtube Offline",
+  "productName": "YouTube Offline",
   "version": "1.0.0",
   "description": "A lightweight YouTube video downloader enabling offline viewing of your favorite content.",
   "main": "index.js",
@@ -21,8 +21,8 @@
     "electron-builder": "^24.9.1"
   },
   "build": {
-    "appId": "com.ipenywis.app",
-    "productName": "Youtube Offline",
+    "appId": "youtube-offline",
+    "productName": "YouTube Offline",
     "target": "NSIS",
     "directories": {
       "output": "build"

@@ -4,7 +4,7 @@ const path = require('path');
 function createWindow() {
   const window = new BrowserWindow({
     show: false,
-    title: "Youtube Offline",
+    title: "YouTube Offline",
     icon: path.join(__dirname, "assets/favicon.ico"),
     autoHideMenuBar: true,
     webPreferences: {
