@@ -21,7 +21,7 @@
             padding-left: 17.5px;
             background-color: #181717;
           "
-        />
+        /> 
         <button
           id="downloadButton"
           class="downloadButton"
@@ -74,9 +74,36 @@
         controls=""
       ></video>
       <div
+        id="deleteVideoButton"
+        style="
+          position: fixed;
+          top: 7.5px;
+          left: 7.5px;
+          width: 25.5px;
+          height: 25px;
+          background-color: white;
+          border-radius: 5px;
+          display: flex;
+          justify-content: center;
+          cursor: pointer;
+          border: 1px solid #9f9f9f;
+          aspect-ratio: 1 / 1;
+        "
+      >
+        <img
+          src="../assets/trashCan.png"
+          style="
+            height: 80%;
+            aspect-ratio: 1.125/1;
+            margin-left: 2.5%;
+            margin-top: 10%;
+          "
+        />
+      </div>
+      <div
         id="closeVideoButton"
         style="
-          position: absolute;
+          position: fixed;
           top: 7.5px;
           right: 7.5px;
           width: 25.5px;
@@ -91,7 +118,7 @@
         "
       >
         <img
-          src="https://cdn-icons-png.flaticon.com/512/6372/6372150.png"
+          src="../assets/cross.png"
           style="
             height: 90%;
             aspect-ratio: 1.125/1;

@@ -1,7 +1,7 @@
 {
   "name": "youtube-offline",
   "productName": "YouTube Offline",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A lightweight YouTube video downloader enabling offline viewing of your favorite content.",
   "main": "index.js",
   "keywords": [],
@@ -12,9 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "moment": "^2.30.1",
+    "ws": "^8.16.0",
     "ytdl-core": "^4.11.5",
-    "ytdl-core-muxer": "^1.0.1",
-    "ytpl": "^2.3.0"
+    "ytdl-core-muxer": "^1.0.1"
   },
   "devDependencies": {
     "electron": "^28.2.0",
