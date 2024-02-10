@@ -2,7 +2,7 @@
   "name": "youtube-offline",
   "productName": "YouTube Offline",
   "version": "1.0.2",
-  "description": "A lightweight YouTube video downloader enabling offline viewing of your favorite content.",
+  "description": "A lightweight YouTube video downloader enabling offline viewing of your favorite content",
   "main": "index.js",
   "keywords": [],
   "scripts": {

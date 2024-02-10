@@ -36,7 +36,6 @@ Array.apply(null, Array(Math.ceil(Object.keys(JSON.parse(fs.readFileSync(path.jo
         document.getElementById("videoSelectContainer").style.display = "none";
         document.getElementById("videoViewContainer").style.display = "flex";
         document.getElementById("videoElement").src = path.join(path.dirname(path.dirname(__dirname)), "videos/" + Object.keys(JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8")))[(videoRowIndex * 4) + videoElementIndex] + ".mp4");
-        document.getElementById("videoElement").loop = JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8"))[Object.keys(JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8")))[(videoRowIndex * 4) + videoElementIndex]].loop;
         document.getElementById("videoElement").dataset.id = Object.keys(JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8")))[(videoRowIndex * 4) + videoElementIndex];
         document.getElementById("videoElement").play();
       });
@@ -103,7 +102,6 @@ Array.apply(null, Array(Math.ceil(Object.keys(JSON.parse(fs.readFileSync(path.jo
 document.getElementById("downloadButton").addEventListener("click", () => {
   if (localStorage.getItem("apiKey")) {
     let downloadLink = (document.getElementById("downloadLinkInput").value.split("/")[3]?.startsWith("shorts")) ? document.getElementById("downloadLinkInput").value.replace("shorts/", "watch?v=") : document.getElementById("downloadLinkInput").value;
-    let downloadLinkType = document.getElementById("downloadLinkInput").value.split("/")[3];
     let downloadVideo = (downloadLink) => {
       if (Object.keys(JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8"))).includes(downloadLink.split("/")[3].split("=")[1].split("&")[0])) return;
       return new Promise((resolve) => {
@@ -125,37 +123,34 @@ document.getElementById("downloadButton").addEventListener("click", () => {
             ...JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8")) || {},
             ...{
               [videoId]: {
-                ...{
-                  title, lengthSeconds, viewCount, publishDate, authorId, authorName
-                },
-                ...{
-                  loop: downloadLinkType.startsWith("shorts")
-                }
+                title, lengthSeconds, viewCount, publishDate, authorId, authorName
               }
             }
           }), "utf8");
           https.get(thumbnails.at(-1).url, (thumbnail) => {
             thumbnail.pipe(fs.createWriteStream(path.join(path.dirname(path.dirname(__dirname)), "videos/" + videoId + ".jpg")));
           });
-          fetch("https://www.googleapis.com/youtube/v3/channels?part=snippet&id=" + authorId + "&fields=items%2Fsnippet%2Fthumbnails&key=" + localStorage.getItem("apiKey"))
-          .then((response) => response.json())
-          .then(({
-            items: [
-              {
-                snippet: {
-                  thumbnails: {
-                    default: {
-                      url: authorProfilePictureURL
+          if (!fs.readdirSync(path.join(path.dirname(path.dirname(__dirname)), "authors")).includes(authorId + ".jpg")) {
+            fetch("https://www.googleapis.com/youtube/v3/channels?part=snippet&id=" + authorId + "&fields=items%2Fsnippet%2Fthumbnails&key=" + localStorage.getItem("apiKey"))
+            .then((response) => response.json())
+            .then(({
+              items: [
+                {
+                  snippet: {
+                    thumbnails: {
+                      default: {
+                        url: authorProfilePictureURL
+                      }
                     }
                   }
                 }
-              }
-            ]
-          }) => {
-            https.get(authorProfilePictureURL, (authorProfilePicture) => {
-              authorProfilePicture.pipe(fs.createWriteStream(path.join(path.dirname(path.dirname(__dirname)), "authors/" + authorId + ".jpg")));
-            });
-          }).catch(() => {});
+              ]
+            }) => {
+              https.get(authorProfilePictureURL, (authorProfilePicture) => {
+                authorProfilePicture.pipe(fs.createWriteStream(path.join(path.dirname(path.dirname(__dirname)), "authors/" + authorId + ".jpg")));
+              });
+            }).catch(() => {});
+          };
           resolve(ytmux(downloadLink).pipe(fs.createWriteStream(path.join(path.dirname(path.dirname(__dirname)), "videos/" + videoId + ".mp4"))));
         });
       });
@@ -164,7 +159,7 @@ document.getElementById("downloadButton").addEventListener("click", () => {
       document.getElementById("downloadLinkInput").value = "";
       if (document.getElementById("videoContainer").children[0]?.children[0]?.tagName === "H2") document.getElementById("videoContainer").children[0].remove();
       if (Array.from(Array.from(document.getElementById("videoContainer").children || [])?.at(-1)?.children || [])?.find((videoElement) => videoElement?.style?.opacity === "0")) {
-        Array.from(Array.from(document.getElementById("videoContainer").children).at(-1).children).find((videoElement) => videoElement?.style.opacity === "0").dataset.id = videoId;
+        Array.from(Array.from(document.getElementById("videoContainer").children).at(-1).children).find((videoElement) => videoElement?.style.opacity === "0").dataset.id = downloadLink.split("/")[3].split("=")[1].split("&")[0];
         Array.from(Array.from(document.getElementById("videoContainer").children).at(-1).children).find((videoElement) => videoElement?.style.opacity === "0").style.cursor = "pointer";
         Array.from(Array.from(document.getElementById("videoContainer").children).at(-1).children).find((videoElement) => videoElement?.style.opacity === "0").style.opacity = "1";
       } else {
@@ -244,7 +239,6 @@ document.getElementById("downloadButton").addEventListener("click", () => {
             document.getElementById("videoSelectContainer").style.display = "none";
             document.getElementById("videoViewContainer").style.display = "flex";
             document.getElementById("videoElement").src = path.join(path.dirname(path.dirname(__dirname)), "videos/" + downloadLink.split("/")[3].split("=")[1].split("&")[0] + ".mp4");
-            document.getElementById("videoElement").loop = JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8"))[downloadLink.split("/")[3].split("=")[1].split("&")[0]].loop;
             document.getElementById("videoElement").dataset.id = downloadLink.split("/")[3].split("=")[1].split("&")[0];
             document.getElementById("videoElement").play();
           });
@@ -349,7 +343,6 @@ document.getElementById("downloadButton").addEventListener("click", () => {
                   document.getElementById("videoSelectContainer").style.display = "none";
                   document.getElementById("videoViewContainer").style.display = "flex";
                   document.getElementById("videoElement").src = path.join(path.dirname(path.dirname(__dirname)), "videos/" + videoId + ".mp4");
-                  document.getElementById("videoElement").loop = JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8"))[videoId].loop;
                   document.getElementById("videoElement").dataset.id = videoId;
                   document.getElementById("videoElement").play();
                 });
@@ -379,9 +372,14 @@ document.getElementById("downloadButton").addEventListener("click", () => {
   };
 });
 
+document.getElementById("videoElement").addEventListener("loadedmetadata", () => {
+  document.getElementById("videoElement").loop = ((document.getElementById("videoElement").videoWidth / document.getElementById("videoElement").videoHeight) === 0.5625) && (Number(JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8"))[document.getElementById("videoElement").dataset.id].lengthSeconds) <= 61);
+});
+
 document.getElementById("deleteVideoButton").addEventListener("click", () => {
   if(confirm("Are you sure you want to irreversibly delete this video?")) {
     document.getElementById("closeVideoButton").click();
+    let videoAuthorId = JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8"))[document.getElementById("videoElement").dataset.id].authorId;
     fs.writeFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), JSON.stringify(Object.entries(JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8"))).filter(([videoId]) => videoId !== document.getElementById("videoElement").dataset.id).reduce((data, [videoId, videoData]) => ({
       ...data,
       ...{
@@ -401,6 +399,25 @@ document.getElementById("deleteVideoButton").addEventListener("click", () => {
     });
     if (Array.from(Array.from(document.getElementById("videoContainer").children).at(-1).children).every((videoElement) => videoElement.style.opacity === "0")) {
       Array.from(document.getElementById("videoContainer").children).at(-1).remove();
+      if (!document.getElementById("videoContainer").children.length) {
+        document.getElementById("videoContainer").innerHTML = `<div
+          style="
+            border-radius: 12.5px;
+            border: 0.75px solid #343232;
+            margin-top: 7.5px;
+          "
+        >
+          <h2
+            style="
+              color: white;
+              text-align: center;
+              font-family: Roboto, Arial, sans-serif;
+            "
+          >
+            No videos downloaded
+          </h2>
+        </div>`;
+      };
     } else {
       let videoElement = document.createElement("div");
       videoElement.dataset.id = document.getElementById("videoElement").dataset.id;
@@ -414,10 +431,12 @@ document.getElementById("deleteVideoButton").addEventListener("click", () => {
       videoElement.appendChild(videoElementThumbnail);
       Array.from(document.getElementById("videoContainer").children).at(-1).appendChild(videoElement);
     };
-  };
-  fs.unlink(path.join(path.dirname(path.dirname(__dirname)), "videos/" + document.getElementById("videoElement").dataset.id + ".jpg"), () => {
+    fs.unlinkSync(path.join(path.dirname(path.dirname(__dirname)), "videos/" + document.getElementById("videoElement").dataset.id + ".jpg"));
     fs.unlinkSync(path.join(path.dirname(path.dirname(__dirname)), "videos/" + document.getElementById("videoElement").dataset.id + ".mp4"));
-  });
+    if (!Object.values(JSON.parse(fs.readFileSync(path.join(path.dirname(path.dirname(__dirname)), "data.json"), "utf8"))).some((videoElement) => videoElement.authorId === videoAuthorId)) {
+      fs.unlinkSync(path.join(path.dirname(path.dirname(__dirname)), "authors/" + videoAuthorId + ".jpg"));
+    };
+  };
 });
 
 document.getElementById("closeVideoButton").addEventListener("click", () => {
@@ -429,8 +448,8 @@ document.getElementById("closeVideoButton").addEventListener("click", () => {
   document.getElementById("videoElement").removeAttribute("src");
 });
 
-ws.on('connection', (socket) => {
-  socket.on('message', (message) => {
+ws.on("connection", (socket) => {
+  socket.on("message", (message) => {
     if (localStorage.getItem("apiKey")) {
       document.getElementById("downloadLinkInput").value = message;
       document.getElementById("downloadButton").click();
